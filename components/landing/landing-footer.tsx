@@ -24,13 +24,25 @@ export function LandingFooter() {
 
   return (
     <footer
-      className="px-6 py-16"
+      className="relative px-6 py-16 overflow-hidden"
       style={{
-        backgroundColor: "var(--landing-bg-alt)",
+        backgroundImage: "url('/image.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         borderTop: "1px solid var(--landing-border)",
       }}
     >
-      <div className="mx-auto max-w-6xl">
+      {/* Background Overlay */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ 
+          backgroundColor: "var(--landing-bg-alt)", 
+          opacity: 0.15
+        }} 
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">

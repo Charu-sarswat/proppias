@@ -25,9 +25,10 @@ function StatItem({ icon, label, value, accentColor, delay }: StatItemProps) {
 
   return (
     <div
-      className={`stats-card flex items-center gap-3 rounded-xl bg-card px-4 py-3 ring-1 ring-foreground/5 transition-all duration-500 ${
+      className={`flex items-center gap-3 rounded-xl bg-card px-4 py-3 border transition-all duration-500 ${
         isVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
       }`}
+      style={{ borderColor: "color-mix(in oklch, var(--accent-teal) 20%, transparent)" }}
     >
       <div
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"

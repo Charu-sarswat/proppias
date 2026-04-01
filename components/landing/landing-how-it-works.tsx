@@ -59,131 +59,104 @@ export function LandingHowItWorks() {
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="relative mt-16">
-          {/* Connecting line - desktop only */}
-          <div
-            className="absolute top-16 right-0 left-0 hidden h-0.5 lg:block"
-            style={{ backgroundColor: "var(--landing-border)" }}
-          />
-
-          <div className="grid gap-8 lg:grid-cols-3 lg:gap-12">
-            {steps.map((step) => (
-              <div className="relative text-center" key={step.step}>
-                {/* Step Number Circle */}
-                <div className="relative mx-auto mb-6">
-                  <div
-                    className="relative z-10 mx-auto flex size-32 items-center justify-center rounded-full"
-                    style={{
-                      backgroundColor: "var(--landing-card)",
-                      boxShadow: "0 8px 32px -8px var(--landing-shadow)",
-                      border: "1px solid var(--landing-border)",
-                    }}
-                  >
-                    <step.icon
-                      className="size-12"
-                      style={{ color: "var(--landing-accent)" }}
-                    />
-                  </div>
-
-                  {/* Step number badge */}
-                  <div
-                    className="absolute -top-2 -right-2 flex size-10 items-center justify-center rounded-full font-bold text-sm"
-                    style={{
-                      backgroundColor: "var(--landing-accent)",
-                      color: "var(--landing-accent-foreground)",
-                    }}
-                  >
-                    {step.step}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <h3
-                  className="font-semibold text-xl"
-                  style={{ color: "var(--landing-text)" }}
-                >
-                  {step.title}
-                </h3>
-                <p
-                  className="mx-auto mt-3 max-w-xs text-sm leading-relaxed"
-                  style={{ color: "var(--landing-text-muted)" }}
-                >
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Demo Card */}
-        <div
-          className="mx-auto mt-20 max-w-3xl overflow-hidden rounded-2xl md:rounded-3xl"
-          style={{
-            backgroundColor: "var(--landing-card)",
-            boxShadow: "0 25px 50px -12px var(--landing-shadow)",
-            border: "1px solid var(--landing-border)",
-          }}
-        >
-          <div className="grid md:grid-cols-2">
-            {/* Before */}
-            <div className="relative p-6 md:p-8">
-              <span
-                className="absolute top-6 left-6 rounded-full px-3 py-1 font-medium text-xs md:top-8 md:left-8"
-                style={{
-                  backgroundColor: "var(--landing-bg-alt)",
-                  color: "var(--landing-text-muted)",
-                  border: "1px solid var(--landing-border)",
-                }}
-              >
-                Before
-              </span>
-              <div
-                className="aspect-[4/3] rounded-xl"
-                style={{ backgroundColor: "var(--landing-bg-alt)" }}
-              >
-                <div className="flex h-full items-center justify-center">
-                  <p
-                    className="text-sm"
-                    style={{ color: "var(--landing-text-muted)" }}
-                  >
-                    Original Photo
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* After */}
+        <div className="mt-16 grid lg:grid-cols-2 gap-12 items-center px-4">
+          {/* Steps (Left Column) */}
+          <div className="relative">
+            {/* Vertical Connecting line */}
             <div
-              className="relative p-6 md:p-8"
-              style={{ backgroundColor: "var(--landing-bg-alt)" }}
-            >
-              <span
-                className="absolute top-6 left-6 rounded-full px-3 py-1 font-medium text-xs md:top-8 md:left-8"
-                style={{
-                  backgroundColor: "var(--landing-accent)",
-                  color: "var(--landing-accent-foreground)",
-                }}
-              >
-                After
-              </span>
-              <div
-                className="aspect-[4/3] rounded-xl"
-                style={{
-                  backgroundColor: "var(--landing-card)",
-                  border: "1px solid var(--landing-border)",
-                }}
-              >
-                <div className="flex h-full items-center justify-center">
-                  <p
-                    className="text-sm"
-                    style={{ color: "var(--landing-text-muted)" }}
-                  >
-                    Enhanced Photo
-                  </p>
+              className="absolute left-[3.5rem] top-0 bottom-0 w-0.5"
+              style={{ 
+                backgroundColor: "var(--landing-accent)",
+                opacity: 0.2,
+              }}
+            />
+
+            <div className="flex flex-col gap-12 relative z-10">
+              {steps.map((step) => (
+                <div 
+                  className="flex items-start gap-6" 
+                  key={step.step}
+                >
+                  {/* Step Number Circle */}
+                  <div className="relative shrink-0">
+                    <div className="relative group">
+                      <div
+                        className="relative z-10 flex size-28 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-105"
+                        style={{
+                          backgroundColor: "var(--landing-card)",
+                          border: "1px solid var(--landing-accent)",
+                        }}
+                      >
+                        <step.icon
+                          className="size-10"
+                          style={{ color: "var(--landing-accent)" }}
+                        />
+                      </div>
+
+                      {/* Step number badge */}
+                      <div
+                        className="absolute -top-2 -right-2 z-30 flex size-10 items-center justify-center rounded-full font-bold text-sm"
+                        style={{
+                          backgroundColor: "var(--landing-accent)",
+                          color: "var(--landing-accent-foreground)",
+                        }}
+                      >
+                        {step.step}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="pt-6">
+                    <h3
+                      className="font-bold text-xl tracking-tight"
+                      style={{ color: "var(--landing-text)" }}
+                    >
+                      {step.title}
+                    </h3>
+                    <p
+                      className="mt-2 text-sm leading-relaxed"
+                      style={{ color: "var(--landing-text-muted)" }}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
+          </div>
+
+          {/* Video (Right Column) */}
+          <div className="relative lg:mt-0 mt-8">
+             <div 
+              className="relative overflow-hidden rounded-[2.5rem] p-1.5 shadow-[0_32px_64px_-16px_var(--landing-shadow)]"
+              style={{ 
+                backgroundColor: "var(--landing-card)",
+                border: "1px solid var(--landing-border)"
+              }}
+             >
+                <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-black">
+                  <video
+                    autoPlay
+                    className="absolute inset-0 size-full object-cover"
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                  >
+                    <source src="/proppi.mp4" type="video/mp4" />
+                  </video>
+                </div>
+             </div>
+
+             {/* Decorative elements */}
+             <div 
+               className="absolute -right-6 -bottom-6 -z-10 size-32 rounded-full blur-2xl"
+               style={{ 
+                 backgroundColor: "var(--landing-accent)",
+                 opacity: 0.1 
+               }}
+             />
           </div>
         </div>
       </div>

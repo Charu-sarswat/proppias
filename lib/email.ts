@@ -5,10 +5,20 @@ import { VerifyEmail } from "../emails/verify-email";
 import { WelcomeEmail } from "../emails/welcome-email";
 import { siteConfig } from "./siteconfig";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization — avoids crashing at module load when RESEND_API_KEY is missing.
+// Previously `new Resend(...)` was called at the top level which caused a fatal 500
+// on ALL auth routes (including sign-up) even before sending any email.
+function getResend() {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error(
+      "RESEND_API_KEY is not set. Add it to your .env file to enable email sending."
+    );
+  }
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendWelcomeEmail(to: string, name: string) {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: siteConfig.email.from,
     to,
     subject: `Welcome to ${siteConfig.name}!`,
@@ -29,7 +39,7 @@ export async function sendInviteEmail(
   workspaceName: string,
   inviteLink: string
 ) {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: siteConfig.email.from,
     to,
     subject: `${inviterName} invited you to join ${workspaceName} on ${siteConfig.name}`,
@@ -49,7 +59,7 @@ export async function sendVerificationEmail(
   name: string,
   verifyLink: string
 ) {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: siteConfig.email.from,
     to,
     subject: `Verify your email for ${siteConfig.name}`,
@@ -69,7 +79,7 @@ export async function sendPasswordResetEmail(
   name: string,
   resetLink: string
 ) {
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: siteConfig.email.from,
     to,
     subject: `Reset your password for ${siteConfig.name}`,

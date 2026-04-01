@@ -31,7 +31,7 @@ export function EmptyProjects({
       {/* Icon */}
       <div className="relative animate-fade-in-up">
         <div
-          className="flex h-28 w-28 items-center justify-center rounded-3xl shadow-lg ring-1 ring-white/10"
+          className="flex h-28 w-28 items-center justify-center rounded-3xl ring-1 ring-white/10"
           style={{
             background:
               "linear-gradient(135deg, color-mix(in oklch, var(--accent-teal) 20%, transparent) 0%, color-mix(in oklch, var(--accent-teal) 5%, transparent) 100%)",
@@ -44,7 +44,7 @@ export function EmptyProjects({
           />
         </div>
         {/* Sparkle accent */}
-        <div className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-card shadow-md ring-1 ring-foreground/5">
+        <div className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-card ring-1 ring-foreground/5">
           <IconSparkles className="h-4 w-4 text-amber-500" />
         </div>
       </div>
@@ -63,7 +63,7 @@ export function EmptyProjects({
       {/* CTA */}
       <div className="stagger-2 animate-fade-in-up">
         <Button
-          className="gap-2 px-8 shadow-lg transition-all hover:shadow-xl"
+          className="gap-2 px-8 transition-all"
           onClick={onCreateClick}
           size="lg"
           style={{

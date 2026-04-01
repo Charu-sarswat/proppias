@@ -33,7 +33,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
-    requireEmailVerification: true,
+    requireEmailVerification: false, // TODO: set to true once RESEND_API_KEY is configured
     sendResetPassword: async ({ user: resetUser, url, token }) => {
       // Construct the correct reset password URL
       // Extract token from URL if not provided directly, or use the token parameter
@@ -99,8 +99,8 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ user: verifyUser, url }) => {
       await sendVerificationEmail(verifyUser.email, verifyUser.name, url);
     },
-    sendOnSignUp: true,
-    sendOnSignIn: true, // Resend verification on unverified sign-in attempts
+    sendOnSignUp: false, // TODO: set to true once RESEND_API_KEY is configured
+    sendOnSignIn: false, // Resend verification on unverified sign-in attempts
     autoSignInAfterVerification: true,
   },
   session: {

@@ -26,10 +26,10 @@ export default async function DashboardLayout({
     redirect("/sign-in");
   }
 
-  // Check if email is verified
-  if (!session.user.emailVerified) {
-    redirect("/verify-email");
-  }
+  // Check if email is verified (temporarily disabled while RESEND is not configured)
+  // if (!session.user.emailVerified) {
+  //   redirect("/verify-email");
+  // }
 
   // Get user with workspace
   const data = await getUserWithWorkspace(session.user.id);

@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { LandingFooter } from "./landing-footer";
 import { LandingNav } from "./landing-nav";
+import { cn } from "@/lib/utils";
 
 const photoFeatures = [
   "Up to 20 images per property",
@@ -79,106 +80,133 @@ function PricingCard({
 }) {
   return (
     <div
-      className="relative flex flex-col rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1"
+      className={cn(
+        "relative flex flex-col rounded-[2rem] p-8 transition-all duration-500 group",
+        popular ? "z-10 bg-card border-[2px]" : "bg-card border"
+      )}
       style={{
-        backgroundColor: popular ? "var(--landing-card)" : "var(--landing-bg)",
-        boxShadow: popular
-          ? "0 20px 40px -12px var(--landing-shadow)"
-          : "0 4px 24px -4px var(--landing-shadow)",
-        border: popular
-          ? "2px solid var(--landing-accent)"
-          : "1px solid var(--landing-border)",
+        backgroundColor: "var(--landing-card)",
+        borderColor: popular 
+          ? "var(--landing-accent)" 
+          : "color-mix(in oklch, var(--landing-accent) 15%, transparent)",
       }}
     >
+      <style jsx>{`
+        .group:hover {
+          border-color: color-mix(in oklch, var(--landing-accent) 40%, transparent) !important;
+        }
+      `}</style>
       {popular && (
         <div
-          className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 font-semibold text-xs"
+          className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full px-6 py-1.5 font-bold text-[10px] uppercase tracking-[0.2em]"
           style={{
             backgroundColor: "var(--landing-accent)",
-            color: "var(--landing-accent-foreground)",
+            color: "white",
           }}
         >
           Most Popular
         </div>
       )}
 
-      {/* Icon */}
-      <div
-        className="relative mb-6 inline-flex size-14 items-center justify-center rounded-xl"
-        style={{
-          backgroundColor: popular
-            ? "var(--landing-accent)"
-            : "var(--landing-bg-alt)",
-          border: popular ? "none" : "1px solid var(--landing-border)",
-        }}
-      >
-        <Icon
-          className="size-7"
+      {/* Title & Icon Header */}
+      <div className="mb-8 flex items-center justify-between">
+        <div
+          className="relative inline-flex size-14 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:scale-110"
           style={{
-            color: popular
-              ? "var(--landing-accent-foreground)"
-              : "var(--landing-accent)",
+            backgroundColor: popular
+              ? "var(--landing-accent)"
+              : "var(--landing-bg-alt)",
           }}
-        />
+        >
+          <Icon
+            className="size-7"
+            style={{
+              color: popular
+                ? "white"
+                : "var(--landing-accent)",
+            }}
+          />
+        </div>
+        <div className="text-right">
+           <h3
+            className="font-bold text-xl"
+            style={{ color: "var(--landing-text)" }}
+          >
+            {title}
+          </h3>
+          <p className="text-[10px] font-bold uppercase tracking-widest opacity-40">Property Tier</p>
+        </div>
       </div>
 
-      {/* Title */}
-      <h3
-        className="font-semibold text-xl"
-        style={{ color: "var(--landing-text)" }}
-      >
-        {title}
-      </h3>
-
       {/* Price */}
-      <div className="mt-4 flex items-baseline gap-2">
-        <span
-          className="font-bold text-4xl tabular-nums"
-          style={{ color: "var(--landing-text)" }}
-        >
-          {price}
-        </span>
-        <span
-          className="text-sm"
-          style={{ color: "var(--landing-text-muted)" }}
-        >
-          {per}
-        </span>
+      <div className="mb-8">
+        <div className="flex items-baseline gap-2">
+          <span
+            className="font-bold text-5xl tracking-tight tabular-nums"
+            style={{ color: "var(--landing-text)" }}
+          >
+            {price.split(' ')[0]}
+          </span>
+          <div className="flex flex-col">
+            <span
+              className="font-bold text-lg leading-none"
+              style={{ color: "var(--landing-text)" }}
+            >
+              {price.split(' ')[1]}
+            </span>
+            <span
+              className="text-xs font-medium uppercase tracking-wider opacity-60 mt-1"
+              style={{ color: "var(--landing-text-muted)" }}
+            >
+              {per}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Features */}
-      <ul className="mt-8 flex-1 space-y-4">
-        {features.map((feature) => (
-          <li className="flex items-start gap-3" key={feature}>
-            <IconCheck
-              className="mt-0.5 size-5 shrink-0"
-              style={{ color: "var(--landing-accent)" }}
-            />
-            <span
-              className="text-sm"
-              style={{ color: "var(--landing-text-muted)" }}
-            >
-              {feature}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <div className="flex-1 space-y-4 pt-4 border-t border-muted/20">
+        <p className="text-[10px] font-bold uppercase tracking-[0.1em] opacity-40">What's included</p>
+        <ul className="space-y-4">
+          {features.map((feature) => (
+            <li className="flex items-start gap-3" key={feature}>
+              <div 
+                className="mt-1 flex size-5 shrink-0 items-center justify-center rounded-full"
+                style={{ backgroundColor: "var(--landing-accent)", opacity: 0.1 }}
+              >
+                <IconCheck
+                  className="size-3"
+                  style={{ color: "var(--landing-accent)" }}
+                />
+              </div>
+              <span
+                className="text-sm font-medium"
+                style={{ color: "var(--landing-text-muted)" }}
+              >
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* CTA */}
       <Link
-        className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full font-medium text-base transition-all duration-200 hover:scale-[1.02]"
+        className={cn(
+          "mt-10 inline-flex h-14 items-center justify-center gap-2 rounded-full font-bold text-base transition-all duration-300 active:scale-[0.98]",
+          !popular && "border border-zinc-200 dark:border-zinc-800"
+        )}
         href="/sign-in"
         style={{
           backgroundColor: popular
             ? "var(--landing-accent)"
-            : "var(--landing-bg-alt)",
+            : "transparent",
           color: popular
-            ? "var(--landing-accent-foreground)"
+            ? "white"
             : "var(--landing-text)",
-          border: popular ? "none" : "1px solid var(--landing-border-strong)",
         }}
       >
-        Get Started
+        Get Started Now
         <IconArrowRight className="size-5" />
       </Link>
     </div>
@@ -236,29 +264,54 @@ export function PricingPage() {
     >
       <LandingNav />
 
-      <main>
+      <main className="relative">
+        {/* Background Gradients */}
+        <div
+          className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[600px] w-[1000px] -translate-x-1/2 rounded-full blur-3xl opacity-20"
+          style={{
+            background:
+              "radial-gradient(circle, var(--landing-accent) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute top-[400px] left-0 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full blur-3xl opacity-10"
+          style={{
+            background: "var(--landing-accent)",
+          }}
+        />
+
         {/* Hero Section */}
-        <section className="px-6 pt-20 pb-16 text-center md:pt-28 md:pb-24">
+        <section className="px-6 pt-24 pb-20 text-center md:pt-32 md:pb-28">
           <div className="mx-auto max-w-3xl">
-            <p
-              className="font-semibold text-sm uppercase tracking-wider"
-              style={{ color: "var(--landing-accent)" }}
+            <div
+              className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-xs uppercase tracking-wider"
+              style={{
+                backgroundColor: "var(--landing-bg-alt)",
+                color: "var(--landing-accent)",
+                border: "1px solid var(--landing-border)",
+              }}
             >
+              <span
+                className="size-2 rounded-full"
+                style={{ backgroundColor: "var(--landing-accent)" }}
+              />
               Pricing
-            </p>
+            </div>
             <h1
-              className="mt-3 font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl"
+              className="font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
               style={{ color: "var(--landing-text)" }}
             >
               Simple, transparent
               <br />
-              pricing
+              <span style={{ color: "var(--landing-accent)" }}>pricing</span>
             </h1>
             <p
-              className="mt-4 text-lg leading-relaxed md:text-xl"
+              className="mt-6 text-lg leading-relaxed md:text-xl"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Pay per project. No subscriptions, no hidden fees.
+              Pay per project. No subscriptions, no hidden fees,
+              <br />
+              just professional results in seconds.
             </p>
           </div>
         </section>
@@ -318,40 +371,54 @@ export function PricingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="px-6 py-24">
+        <section className="px-6 py-32">
           <div
-            className="mx-auto max-w-4xl rounded-3xl px-8 py-16 text-center md:px-16"
+            className="mx-auto max-w-5xl rounded-[3rem] px-8 py-20 text-center md:px-20 relative overflow-hidden"
             style={{
               backgroundColor: "var(--landing-card)",
-              boxShadow: "0 25px 50px -12px var(--landing-shadow)",
               border: "1px solid var(--landing-border)",
             }}
           >
-            <h2
-              className="font-bold text-3xl tracking-tight sm:text-4xl"
-              style={{ color: "var(--landing-text)" }}
-            >
-              Ready to get started?
-            </h2>
-            <p
-              className="mx-auto mt-4 max-w-lg text-lg leading-relaxed"
-              style={{ color: "var(--landing-text-muted)" }}
-            >
-              Transform your property photos today. No credit card required to
-              try.
-            </p>
-            <div className="mt-8">
-              <Link
-                className="inline-flex h-12 items-center gap-2 rounded-full px-8 font-medium text-base transition-all duration-200 hover:scale-[1.03]"
-                href="/sign-in"
-                style={{
-                  backgroundColor: "var(--landing-accent)",
-                  color: "var(--landing-accent-foreground)",
-                }}
+            {/* Background elements */}
+            <div className="absolute top-0 right-0 size-64 bg-accent/20 blur-[100px] pointer-events-none" style={{ backgroundColor: "var(--landing-accent)", opacity: 0.05 }} />
+            <div className="absolute bottom-0 left-0 size-64 bg-accent/20 blur-[100px] pointer-events-none" style={{ backgroundColor: "var(--landing-accent)", opacity: 0.05 }} />
+
+            <div className="relative z-10">
+              <h2
+                className="font-bold text-4xl tracking-tight sm:text-5xl lg:text-6xl"
+                style={{ color: "var(--landing-text)" }}
               >
-                Start for Free
-                <IconArrowRight className="size-5" />
-              </Link>
+                Ready to transform your
+                <br />
+                <span style={{ color: "var(--landing-accent)" }}>property listings?</span>
+              </h2>
+              <p
+                className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed opacity-80"
+                style={{ color: "var(--landing-text-muted)" }}
+              >
+                Join hundreds of top real estate professional who are already saving hours 
+                on every listing. No credit card required to try your first project.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  className="inline-flex h-14 items-center gap-2 rounded-full px-10 font-bold text-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                  href="/sign-in"
+                  style={{
+                    backgroundColor: "var(--landing-accent)",
+                    color: "white",
+                  }}
+                >
+                  Start for Free Today
+                  <IconArrowRight className="size-5" />
+                </Link>
+                <Link
+                  className="font-bold text-sm underline-offset-8 hover:underline"
+                  href="/pricing"
+                  style={{ color: "var(--landing-text)" }}
+                >
+                  View Custom Enterprise Pricing
+                </Link>
+              </div>
             </div>
           </div>
         </section>

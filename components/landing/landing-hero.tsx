@@ -2,8 +2,9 @@
 
 import { IconArrowRight, IconPlayerPlay } from "@tabler/icons-react";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSession } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 
 function HeroAuthButton() {
   const { data: session, isPending } = useSession();
@@ -27,7 +28,6 @@ function HeroAuthButton() {
       style={{
         backgroundColor: "var(--landing-accent)",
         color: "var(--landing-accent-foreground)",
-        boxShadow: "0 8px 24px -8px var(--landing-accent)",
       }}
     >
       {text}
@@ -36,23 +36,133 @@ function HeroAuthButton() {
   );
 }
 
-export function LandingHero() {
+function StatCounter({ target, suffix = "", duration = 1500, start = false }: { target: number, suffix?: string, duration?: number, start?: boolean }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!start) return;
+
+    let startTime: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      setCount(Math.floor(progress * target));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [target, duration, start]);
+
   return (
-    <section className="relative overflow-hidden px-6 pt-16 pb-24 md:pt-24 md:pb-32">
-      {/* Subtle gradient accent */}
+    <span>
+      {count.toLocaleString()}{suffix}
+    </span>
+  );
+}
+
+import { useRef } from "react";
+
+export function LandingHero() {
+  const [displayText, setDisplayText] = useState("");
+  const [isFinished, setIsFinished] = useState(false);
+  const fullText = "Create Stunning Property Photos Instantly with AI";
+  const heroRef = useRef<HTMLDivElement>(null);
+  
+  // Animation timing
+  const typingSpeed = 50; 
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!isFinished || !heroRef.current) return;
+      
+      const scrollY = window.scrollY;
+      const threshold = 100;
+      const range = 500;
+      const progress = Math.min(Math.max((scrollY - threshold) / range, 0), 1);
+      
+      // Use requestAnimationFrame for smoother performance
+      window.requestAnimationFrame(() => {
+        heroRef.current?.style.setProperty('--scroll-progress', progress.toString());
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isFinished]);
+
+  useEffect(() => {
+    let currentIdx = 0;
+    const timer = setInterval(() => {
+      if (currentIdx <= fullText.length) {
+        setDisplayText(fullText.slice(0, currentIdx));
+        currentIdx++;
+      } else {
+        clearInterval(timer);
+        setTimeout(() => setIsFinished(true), 300);
+      }
+    }, typingSpeed);
+    
+    return () => clearInterval(timer);
+  }, []);
+
+  // Map text to components with correct styling
+  const renderTypedHeading = () => {
+    const firstPart = "Create Stunning ";
+    const accentPart = "Property Photos ";
+    const lastPart = "Instantly with AI";
+
+    return (
+      <>
+        {/* First Part */}
+        <span>{displayText.slice(0, firstPart.length)}</span>
+        
+        {/* Accent Part */}
+        {displayText.length > firstPart.length && (
+          <span style={{ color: "var(--landing-accent)" }}>
+            {displayText.slice(firstPart.length, firstPart.length + accentPart.length)}
+          </span>
+        )}
+        
+        {/* Last Part */}
+        {displayText.length > firstPart.length + accentPart.length && (
+          <span>{displayText.slice(firstPart.length + accentPart.length)}</span>
+        )}
+
+        {/* Minimal Blinking Cursor */}
+        {!isFinished && (
+          <span className="inline-block w-[3px] h-[1em] ml-1 bg-current animate-pulse align-middle" 
+                style={{ backgroundColor: "var(--landing-accent)" }} />
+        )}
+      </>
+    );
+  };
+
+  return (
+    <section ref={heroRef} className="relative overflow-hidden px-6 pt-24 pb-24 md:pt-36 md:pb-32" style={{ "--scroll-progress": "0" } as any}>
+      {/* Subtle gradient accent - Fades in */}
       <div
-        className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full blur-3xl"
+        className={cn(
+          "pointer-events-none absolute top-0 left-1/2 -z-10 h-[700px] w-[1200px] -translate-x-1/2 rounded-full blur-3xl transition-opacity duration-1000",
+          displayText.length > 0 ? "opacity-40" : "opacity-0"
+        )}
         style={{
           background:
             "radial-gradient(circle, var(--landing-accent) 0%, transparent 70%)",
-          opacity: 0.08,
         }}
       />
 
+      {/* Fading Edges for smooth transitions */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-48 -z-10" style={{ background: "linear-gradient(to bottom, var(--landing-bg), transparent)" }} />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 -z-10" style={{ background: "linear-gradient(to top, var(--landing-bg), transparent)" }} />
+
       <div className="mx-auto max-w-4xl text-center">
-        {/* Badge */}
+        {/* Badge - Fades in after typing */}
         <div
-          className="landing-stagger-1 mb-6 inline-flex animate-spring-up items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-xs uppercase tracking-wider"
+          className={cn(
+            "mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-xs uppercase tracking-wider transition-all duration-700 ease-out",
+            isFinished ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}
           style={{
             backgroundColor: "var(--landing-bg-alt)",
             color: "var(--landing-text-muted)",
@@ -66,30 +176,30 @@ export function LandingHero() {
           #1 AI Photo Editor for Real Estate
         </div>
 
-        {/* Main Headline */}
+        {/* Main Headline - Typewriter */}
         <h1
-          className="landing-stagger-2 animate-spring-up font-bold text-4xl leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-bold text-4xl leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl min-h-[2.2em] md:min-h-[auto]"
           style={{ color: "var(--landing-text)" }}
         >
-          Create Stunning
-          <br />
-          <span style={{ color: "var(--landing-accent)" }}>
-            Property Photos
-          </span>
-          <br />
-          Instantly with AI
+          {renderTypedHeading()}
         </h1>
 
-        {/* Subheadline */}
+        {/* Subheadline - Fades in after typing */}
         <p
-          className="landing-stagger-3 mx-auto mt-6 max-w-xl animate-spring-up text-lg leading-relaxed md:text-xl"
+          className={cn(
+            "mx-auto mt-6 max-w-xl text-lg leading-relaxed md:text-xl transition-all duration-700 delay-100 ease-out",
+            isFinished ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          )}
           style={{ color: "var(--landing-text-muted)" }}
         >
           Transform photos 10x faster. No design skills needed.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="landing-stagger-4 mt-10 flex animate-spring-up flex-col items-center justify-center gap-4 sm:flex-row">
+        {/* CTA Buttons - Fades in after typing */}
+        <div className={cn(
+          "mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row transition-all duration-700 delay-200 ease-out",
+          isFinished ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}>
           <Suspense
             fallback={
               <div
@@ -115,14 +225,17 @@ export function LandingHero() {
           </button>
         </div>
 
-        {/* Stats Row */}
-        <div className="landing-stagger-5 mt-12 flex animate-spring-up flex-wrap items-center justify-center gap-8 md:gap-12">
+        {/* Stats Row - Fades in after typing */}
+        <div className={cn(
+          "mt-12 flex flex-wrap items-center justify-center gap-8 md:gap-12 transition-all duration-700 delay-300 ease-out",
+          isFinished ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        )}>
           <div className="text-center">
             <p
               className="font-bold text-2xl tabular-nums md:text-3xl"
               style={{ color: "var(--landing-text)" }}
             >
-              50,000+
+              <StatCounter target={50000} suffix="+" start={isFinished} />
             </p>
             <p
               className="mt-1 text-sm"
@@ -140,7 +253,7 @@ export function LandingHero() {
               className="font-bold text-2xl tabular-nums md:text-3xl"
               style={{ color: "var(--landing-text)" }}
             >
-              30 sec
+              <StatCounter target={30} suffix=" sec" start={isFinished} />
             </p>
             <p
               className="mt-1 text-sm"
@@ -158,7 +271,7 @@ export function LandingHero() {
               className="font-bold text-2xl tabular-nums md:text-3xl"
               style={{ color: "var(--landing-accent)" }}
             >
-              +85%
+              +<StatCounter target={85} suffix="%" start={isFinished} />
             </p>
             <p
               className="mt-1 text-sm"
@@ -170,74 +283,63 @@ export function LandingHero() {
         </div>
       </div>
 
-      {/* Hero Image Preview */}
-      <div className="landing-stagger-6 mx-auto mt-16 max-w-5xl animate-spring-up px-4">
-        <div
-          className="relative overflow-hidden rounded-2xl p-1.5 md:rounded-3xl"
+      {/* Hero Image Preview - Scroll Triggered Expansion */}
+      <div 
+        className="flex justify-center"
+        style={{ marginTop: "4rem" }}
+      >
+        <div 
+          className={cn(
+            "relative overflow-hidden",
+            isFinished ? "opacity-100" : "opacity-0 transition-opacity duration-300"
+          )}
           style={{
+            width: "calc(60vw + (40vw * var(--scroll-progress)))",
+            maxWidth: "100svw",
+            opacity: "calc(0.2 + (0.8 * var(--scroll-progress)))",
+            transform: "scale(calc(0.9 + (0.1 * var(--scroll-progress))))",
+            borderRadius: "calc(2rem * (1 - var(--scroll-progress)))",
             backgroundColor: "var(--landing-card)",
-            boxShadow:
-              "0 25px 50px -12px var(--landing-shadow), 0 0 0 1px var(--landing-border)",
+            border: "1px solid var(--landing-border)",
+            willChange: "transform, width, opacity, border-radius"
           }}
         >
-          {/* Browser Chrome */}
+          {/* Browser Chrome - Rapid fade out */}
           <div
-            className="flex h-10 items-center gap-2 rounded-t-xl px-4 md:h-12"
-            style={{ backgroundColor: "var(--landing-bg-alt)" }}
+            className="flex h-10 items-center gap-2 px-4 md:h-12 border-b border-white/5"
+            style={{ 
+              backgroundColor: "var(--landing-bg-alt)",
+              opacity: "calc(1 - (var(--scroll-progress) * 2.5))",
+              height: "calc(48px * (1 - var(--scroll-progress) * 2))",
+              minHeight: "0",
+              overflow: "hidden"
+            }}
           >
-            <div className="flex gap-1.5">
-              <div
-                className="size-3 rounded-full"
-                style={{ backgroundColor: "var(--landing-border-strong)" }}
-              />
-              <div
-                className="size-3 rounded-full"
-                style={{ backgroundColor: "var(--landing-border-strong)" }}
-              />
-              <div
-                className="size-3 rounded-full"
-                style={{ backgroundColor: "var(--landing-border-strong)" }}
-              />
+            <div className="flex gap-1.5 opacity-30">
+              <div className="size-2 rounded-full bg-zinc-500" />
+              <div className="size-2 rounded-full bg-zinc-500" />
+              <div className="size-2 rounded-full bg-zinc-500" />
             </div>
-            <div
-              className="ml-4 hidden h-6 max-w-xs flex-1 rounded-md sm:block"
-              style={{ backgroundColor: "var(--landing-bg)" }}
-            />
           </div>
-
+ 
           {/* Preview Content */}
           <div
-            className="relative aspect-[16/9] overflow-hidden rounded-b-xl"
-            style={{ backgroundColor: "var(--landing-bg-alt)" }}
+            className="relative overflow-hidden w-full"
+            style={{ 
+              aspectRatio: "21/9",
+              backgroundColor: "black" 
+            }}
           >
-            {/* Placeholder for actual app screenshot */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div
-                  className="mx-auto mb-4 size-16 rounded-2xl"
-                  style={{
-                    backgroundColor: "var(--landing-accent)",
-                    opacity: 0.2,
-                  }}
-                />
-                <p
-                  className="font-medium text-sm"
-                  style={{ color: "var(--landing-text-muted)" }}
-                >
-                  App Preview
-                </p>
-              </div>
-            </div>
-
-            {/* Decorative Grid */}
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(var(--landing-border) 1px, transparent 1px), linear-gradient(90deg, var(--landing-border) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
+            <video
+              autoPlay
+              className="w-full h-full object-cover"
+              loop
+              muted
+              playsInline
+              preload="auto"
+            >
+              <source src="/propp-hero.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>

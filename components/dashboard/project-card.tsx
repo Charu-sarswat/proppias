@@ -87,8 +87,8 @@ export function ProjectCard({ project, className, style }: ProjectCardProps) {
   return (
     <Link
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/5 transition-all duration-300",
-        "hover:-translate-y-1 hover:shadow-lg hover:ring-foreground/10",
+        "group relative flex flex-col overflow-hidden rounded-2xl bg-card border transition-all duration-300",
+        "hover:-translate-y-1",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         className
       )}
@@ -97,9 +97,15 @@ export function ProjectCard({ project, className, style }: ProjectCardProps) {
         {
           ...style,
           "--focus-ring": "var(--accent-teal)",
+          borderColor: "color-mix(in oklch, var(--accent-teal) 15%, transparent)",
         } as React.CSSProperties
       }
     >
+      <style jsx>{`
+        .group:hover {
+          border-color: color-mix(in oklch, var(--accent-teal) 35%, transparent) !important;
+        }
+      `}</style>
       {/* Thumbnail with overlay */}
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {project.thumbnailUrl ? (
@@ -122,7 +128,7 @@ export function ProjectCard({ project, className, style }: ProjectCardProps) {
         {/* Status badge */}
         <div className="absolute top-3 right-3">
           <Badge
-            className="gap-1 shadow-sm backdrop-blur-sm"
+            className="gap-1 backdrop-blur-sm"
             variant={status.variant}
           >
             {status.icon}

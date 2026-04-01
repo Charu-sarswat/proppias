@@ -217,7 +217,7 @@ function MemberRow({
       style={{ animationDelay: `${index * 30}ms` }}
     >
       {/* User info */}
-      <td className="py-3 pr-4">
+      <td className="py-3 pl-4 pr-4">
         <div className="flex items-center gap-3">
           <MemberAvatar member={member} />
           <div className="min-w-0">

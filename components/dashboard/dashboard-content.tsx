@@ -33,7 +33,7 @@ function ViewToggle({
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200",
           view === "grid"
-            ? "bg-background shadow-sm ring-1 ring-foreground/5"
+            ? "bg-background ring-1 ring-foreground/5"
             : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("grid")}
@@ -48,7 +48,7 @@ function ViewToggle({
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200",
           view === "table"
-            ? "bg-background shadow-sm ring-1 ring-foreground/5"
+            ? "bg-background ring-1 ring-foreground/5"
             : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("table")}
@@ -88,7 +88,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div
-              className="flex h-11 w-11 items-center justify-center rounded-xl shadow-sm ring-1 ring-white/10"
+              className="flex h-11 w-11 items-center justify-center rounded-xl ring-1 ring-white/10"
               style={{ backgroundColor: "var(--accent-teal)" }}
             >
               <IconSparkles className="h-5 w-5 text-white" />
@@ -106,7 +106,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
             <div className="flex items-center gap-3">
               <ViewToggle onViewChange={setView} view={view} />
               <Button
-                className="gap-2 shadow-sm"
+                className="gap-2"
                 onClick={() => setDialogOpen(true)}
                 style={{ backgroundColor: "var(--accent-teal)" }}
               >
