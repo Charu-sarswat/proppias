@@ -2,9 +2,12 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/types/database";
 
 // Server-side client with secret key (for uploads)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co";
+const supabaseKey = process.env.SUPABASE_SECRET_KEY || "placeholder-key";
+
 export const supabaseAdmin = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SECRET_KEY!
+  supabaseUrl,
+  supabaseKey
 );
 
 // Storage bucket name

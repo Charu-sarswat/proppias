@@ -25,6 +25,7 @@ function getAuthBaseUrl(): string {
 }
 
 export const auth = betterAuth({
+  secret: process.env.BETTER_AUTH_SECRET || "default_placeholder_secret_for_build_only",
   baseURL: getAuthBaseUrl(),
   database: drizzleAdapter(db, {
     provider: "pg",
