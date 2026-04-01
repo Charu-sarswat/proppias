@@ -259,46 +259,40 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 export function PricingPage() {
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen overflow-x-clip"
       style={{ backgroundColor: "var(--landing-bg)" }}
     >
       <LandingNav />
 
-      <main className="relative">
+      <main>
         {/* Background Gradients */}
         <div
-          className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[600px] w-[1000px] -translate-x-1/2 rounded-full blur-3xl opacity-20"
+          className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[600px] w-full max-w-[1000px] -translate-x-1/2 rounded-full blur-[140px] opacity-20"
           style={{
             background:
               "radial-gradient(circle, var(--landing-accent) 0%, transparent 70%)",
           }}
         />
-        <div
-          className="pointer-events-none absolute top-[400px] left-0 -z-10 h-[500px] w-[500px] -translate-x-1/2 rounded-full blur-3xl opacity-10"
-          style={{
-            background: "var(--landing-accent)",
-          }}
-        />
 
-        {/* Hero Section */}
-        <section className="px-6 pt-24 pb-20 text-center md:pt-32 md:pb-28">
-          <div className="mx-auto max-w-3xl">
+        {/* Hero Section - Refined for Subpages */}
+        <section className="relative px-6 pt-32 pb-16 text-center md:pt-48 md:pb-24 overflow-hidden">
+          <div className="mx-auto max-w-4xl relative z-10">
             <div
-              className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-xs uppercase tracking-wider"
+              className="mb-8 inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-bold text-[10px] uppercase tracking-[0.2em] shadow-sm"
               style={{
-                backgroundColor: "var(--landing-bg-alt)",
+                backgroundColor: "var(--landing-card)",
                 color: "var(--landing-accent)",
-                border: "1px solid var(--landing-border)",
+                border: "1px solid var(--landing-accent-muted, var(--landing-border))",
               }}
             >
               <span
-                className="size-2 rounded-full"
+                className="size-2 rounded-full animate-pulse"
                 style={{ backgroundColor: "var(--landing-accent)" }}
               />
-              Pricing
+              Our Plans
             </div>
             <h1
-              className="font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+              className="font-bold text-4xl leading-tight tracking-tight sm:text-5xl md:text-7xl lg:text-8xl"
               style={{ color: "var(--landing-text)" }}
             >
               Simple, transparent
@@ -306,13 +300,17 @@ export function PricingPage() {
               <span style={{ color: "var(--landing-accent)" }}>pricing</span>
             </h1>
             <p
-              className="mt-6 text-lg leading-relaxed md:text-xl"
+              className="mt-8 text-base leading-relaxed md:text-xl max-w-2xl mx-auto opacity-70"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Pay per project. No subscriptions, no hidden fees,
-              <br />
-              just professional results in seconds.
+              Transform your property listings with high-end AI enhancements. 
+              Pay per project—no strings attached.
             </p>
+          </div>
+
+          {/* Decorative floating elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 w-full max-w-5xl aspect-square pointer-events-none">
+             <div className="absolute inset-0 bg-accent/5 blur-[120px] rounded-full" style={{ backgroundColor: "var(--landing-accent)", opacity: 0.08 }} />
           </div>
         </section>
 

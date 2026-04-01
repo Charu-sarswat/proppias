@@ -59,43 +59,43 @@ export function LandingHowItWorks() {
           </p>
         </div>
 
-        <div className="mt-16 grid lg:grid-cols-2 gap-12 items-center px-4">
+        <div className="mt-16 grid lg:grid-cols-2 gap-12 items-center px-2 sm:px-4">
           {/* Steps (Left Column) */}
           <div className="relative">
             {/* Vertical Connecting line */}
             <div
-              className="absolute left-[3.5rem] top-0 bottom-0 w-0.5"
+              className="absolute left-[2.25rem] sm:left-[3.5rem] top-0 bottom-0 w-0.5"
               style={{ 
                 backgroundColor: "var(--landing-accent)",
                 opacity: 0.2,
               }}
             />
 
-            <div className="flex flex-col gap-12 relative z-10">
+            <div className="flex flex-col gap-8 sm:gap-12 relative z-10">
               {steps.map((step) => (
                 <div 
-                  className="flex items-start gap-6" 
+                  className="flex items-start gap-4 sm:gap-6" 
                   key={step.step}
                 >
                   {/* Step Number Circle */}
                   <div className="relative shrink-0">
                     <div className="relative group">
                       <div
-                        className="relative z-10 flex size-28 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-105"
+                        className="relative z-10 flex size-18 sm:size-28 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-105"
                         style={{
                           backgroundColor: "var(--landing-card)",
                           border: "1px solid var(--landing-accent)",
                         }}
                       >
                         <step.icon
-                          className="size-10"
+                          className="size-6 sm:size-10"
                           style={{ color: "var(--landing-accent)" }}
                         />
                       </div>
 
                       {/* Step number badge */}
                       <div
-                        className="absolute -top-2 -right-2 z-30 flex size-10 items-center justify-center rounded-full font-bold text-sm"
+                        className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 z-30 flex size-7 sm:size-10 items-center justify-center rounded-full font-bold text-[10px] sm:text-sm"
                         style={{
                           backgroundColor: "var(--landing-accent)",
                           color: "var(--landing-accent-foreground)",
@@ -107,15 +107,15 @@ export function LandingHowItWorks() {
                   </div>
 
                   {/* Content */}
-                  <div className="pt-6">
+                  <div className="pt-2 sm:pt-6">
                     <h3
-                      className="font-bold text-xl tracking-tight"
+                      className="font-bold text-lg sm:text-xl tracking-tight"
                       style={{ color: "var(--landing-text)" }}
                     >
                       {step.title}
                     </h3>
                     <p
-                      className="mt-2 text-sm leading-relaxed"
+                      className="mt-1 sm:mt-2 text-xs sm:text-sm leading-relaxed"
                       style={{ color: "var(--landing-text-muted)" }}
                     >
                       {step.description}

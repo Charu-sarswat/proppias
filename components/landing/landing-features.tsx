@@ -90,18 +90,18 @@ export function LandingFeatures() {
           </h2>
         </div>
 
-        {/* Asymmetric Bento Grid - Standardized on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-2 sm:px-0">
+        {/* Asymmetric Bento Grid - Refined Responsiveness with Minimal Hover */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-2 sm:px-0">
           
-          {/* 1. The Main Showcase (Standardized Mobile Height) */}
+          {/* 1. The Main Showcase */}
           <div 
-            className="md:col-span-2 lg:row-span-2 group relative overflow-hidden rounded-[2rem] flex flex-col transition-all duration-500 p-6 md:p-8 border min-h-[420px] md:min-h-0"
+            className="md:col-span-2 lg:row-span-2 group relative overflow-hidden rounded-[2rem] flex flex-col transition-all duration-500 p-6 md:p-8 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
             style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"
             }}
           >
-            <div className="flex-1 relative rounded-2xl overflow-hidden mb-6 md:mb-8 shadow-inner aspect-[16/10] sm:aspect-auto">
+            <div className="relative rounded-2xl overflow-hidden mb-6 md:mb-8 shadow-inner aspect-[16/10] bg-zinc-100/50">
                <img src="/image2.png" className="absolute inset-0 size-full object-cover transition-all duration-700 group-hover:scale-105" alt="Before" />
                <img src="/image4.png" className="absolute inset-0 size-full object-cover transition-all duration-700 opacity-0 group-hover:opacity-100 group-hover:scale-105" alt="After" />
                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider z-20">
@@ -118,9 +118,9 @@ export function LandingFeatures() {
             </div>
           </div>
           
-          {/* 2. Speed (Horizontal on Mobile) */}
+          {/* 2. Speed */}
           <div 
-            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border min-h-[160px]"
+            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
             style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"
@@ -139,7 +139,7 @@ export function LandingFeatures() {
 
           {/* 3. Style Templates */}
           <div 
-             className="group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 border min-h-[220px]"
+             className="group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col transition-all duration-500 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
              style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"
@@ -149,12 +149,12 @@ export function LandingFeatures() {
                 <IconPalette className="size-8" style={{ color: "var(--landing-accent)" }} />
                 <h3 className="text-xl font-bold" style={{ color: "var(--landing-text)" }}>Creative Styles</h3>
              </div>
-             <p className="text-xs opacity-60" style={{ color: "var(--landing-text-muted)" }}>Professionally curated templates for any aesthetic.</p>
+             <p className="text-xs md:text-sm leading-relaxed opacity-60" style={{ color: "var(--landing-text-muted)" }}>Professionally curated templates for any aesthetic.</p>
           </div>
 
           {/* 4. Batch Processing */}
           <div 
-             className="group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-between transition-all duration-500 border min-h-[220px]"
+             className="group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col transition-all duration-500 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
              style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"
@@ -164,12 +164,12 @@ export function LandingFeatures() {
                 <IconPhoto className="size-8" style={{ color: "var(--landing-accent)" }} />
                 <h3 className="text-xl font-bold" style={{ color: "var(--landing-text)" }}>Batch Upload</h3>
              </div>
-             <p className="text-xs opacity-60" style={{ color: "var(--landing-text-muted)" }}>Process entire shoots in a single operation.</p>
+             <p className="text-xs md:text-sm leading-relaxed opacity-60" style={{ color: "var(--landing-text-muted)" }}>Process entire shoots in a single operation.</p>
           </div>
 
           {/* 5. Device Native */}
           <div 
-            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border min-h-[160px]"
+            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
             style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"
@@ -186,7 +186,7 @@ export function LandingFeatures() {
 
           {/* 6. Security & Privacy */}
           <div 
-            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border min-h-[160px]"
+            className="md:col-span-2 group relative overflow-hidden rounded-[2rem] p-6 md:p-8 flex flex-col justify-center transition-all duration-500 border hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5"
             style={{ 
               backgroundColor: "var(--landing-card)",
               borderColor: "var(--landing-accent)"

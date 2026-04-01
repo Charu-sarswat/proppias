@@ -43,29 +43,29 @@ export function LandingLogos() {
         </div>
 
         {/* Sharp Turn Marquee Wrapper */}
-        <div className="relative flex overflow-hidden w-full py-24">
-          <div className="flex animate-marquee gap-x-6 md:gap-x-10 whitespace-nowrap min-w-full items-center will-change-transform transform-gpu">
+        <div className="relative flex overflow-hidden w-full py-16 md:py-32">
+          <div className="flex animate-marquee gap-x-8 md:gap-x-12 whitespace-nowrap min-w-full items-center will-change-transform transform-gpu">
             {brandIcons.map((Icon, i) => (
               <div 
                 key={i} 
-                className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 animate-snake shadow-sm"
+                className="size-16 md:size-24 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 animate-snake shadow-sm"
                 style={{ 
                   animationDelay: `${i * 0.2}s`,
                 }}
               >
-                <Icon className="size-6 md:size-8" style={{ color: "var(--landing-text)" }} />
+                <Icon className="size-8 md:size-12" style={{ color: "var(--landing-text)" }} />
               </div>
             ))}
             {/* Duplicated for seamless loop */}
             {brandIcons.map((Icon, i) => (
               <div 
                 key={`dup-${i}`} 
-                className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 animate-snake shadow-sm"
+                className="size-16 md:size-24 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 animate-snake shadow-sm"
                 style={{ 
                   animationDelay: `${(i + brandIcons.length) * 0.2}s`,
                 }}
               >
-                <Icon className="size-6 md:size-8" style={{ color: "var(--landing-text)" }} />
+                <Icon className="size-8 md:size-12" style={{ color: "var(--landing-text)" }} />
               </div>
             ))}
           </div>
@@ -78,17 +78,18 @@ export function LandingLogos() {
           100% { transform: translateX(-50%); }
         }
         @keyframes snake {
-          0% { transform: translateY(-60px); }
-          50% { transform: translateY(60px); }
-          100% { transform: translateY(-60px); }
+          0% { transform: translateY(-30px); }
+          50% { transform: translateY(30px); }
+          100% { transform: translateY(-30px); }
         }
         .animate-marquee {
-          animation: marquee 45s linear infinite;
+          animation: marquee 12s linear infinite;
         }
         .animate-snake {
-          animation: snake 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+          animation: snake 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
         }
       `}</style>
     </section>
+
   );
 }

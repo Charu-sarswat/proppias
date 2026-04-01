@@ -6,6 +6,8 @@ import { Suspense, useState, useEffect } from "react";
 import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
+import { usePathname } from "next/navigation";
+
 function AuthButton() {
   const { data: session, isPending } = useSession();
 
@@ -52,6 +54,8 @@ function AuthButton() {
 export function LandingNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   useEffect(() => {
     setIsLoaded(true);
@@ -62,19 +66,21 @@ export function LandingNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const shouldShowBackground = isScrolled || !isHomePage;
+
   return (
     <header
       className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-500 will-change-transform px-6",
-        isScrolled ? "pt-4" : "pt-6",
+        shouldShowBackground ? "pt-4" : "pt-6",
         isLoaded ? "opacity-100" : "opacity-0 -translate-y-4"
       )}
     >
       <nav 
         className={cn(
           "mx-auto flex h-14 max-w-5xl items-center justify-between px-6 rounded-full transition-all duration-500",
-          isScrolled 
-            ? "bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/20 dark:border-zinc-800/50" 
+          shouldShowBackground 
+            ? "bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/10" 
             : "bg-transparent border-transparent"
         )}
       >
@@ -101,7 +107,7 @@ export function LandingNav() {
         <div className="hidden flex-1 items-center justify-center gap-8 md:flex">
           <Link
             className="relative font-medium text-sm transition-opacity hover:opacity-70 group"
-            href="#features"
+            href="/#features"
             style={{ color: "var(--landing-text-muted)" }}
           >
             Features
@@ -110,7 +116,7 @@ export function LandingNav() {
           </Link>
           <Link
             className="relative font-medium text-sm transition-opacity hover:opacity-70 group"
-            href="#how-it-works"
+            href="/#how-it-works"
             style={{ color: "var(--landing-text-muted)" }}
           >
             How It Works
