@@ -15,6 +15,9 @@ function getAuthBaseUrl(): string {
   if (process.env.BETTER_AUTH_URL) {
     return process.env.BETTER_AUTH_URL;
   }
+  if (process.env.URL) {
+    return process.env.URL;
+  }
   if (process.env.NEXT_PUBLIC_APP_URL) {
     return process.env.NEXT_PUBLIC_APP_URL;
   }
@@ -95,14 +98,6 @@ export const auth = betterAuth({
       }
     },
     resetPasswordTokenExpiresIn: 60 * 60, // 1 hour
-  },
-  emailVerification: {
-    sendVerificationEmail: async ({ user: verifyUser, url }) => {
-      await sendVerificationEmail(verifyUser.email, verifyUser.name, url);
-    },
-    sendOnSignUp: false, // TODO: set to true once RESEND_API_KEY is configured
-    sendOnSignIn: false, // Resend verification on unverified sign-in attempts
-    autoSignInAfterVerification: true,
   },
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
